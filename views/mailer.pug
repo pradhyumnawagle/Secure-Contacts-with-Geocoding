@@ -1,0 +1,67 @@
+doctype html
+head
+	meta(charset='utf-8')
+	meta(name='viewport' content='width=device-width, initial-scale=1')
+	link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+	link(rel = 'stylesheet' type='text/css' href='stylesheets/style.css')
+	script(src='https://code.jquery.com/jquery-3.3.1.js')
+	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+.container
+	.page-header(align='center')
+		h1 Contact Information with Geocoding
+
+	nav.navbar.navbar-expand-lg.navbar-dark.bg-dark 
+		.navbar-header
+			a.navbar-brand(href='contacts') Contacts
+		a.navbar-brand(href='mailer') Create
+		
+body
+ 
+	form#addContact(action='mailer' method='post')
+		div
+			input(type='radio' name='prefix' id='Mr.' value='Mr.')
+			| Mr.
+			input(type='radio' name='prefix' id='Mrs.' value='Mrs.')
+			| Mrs.
+			input(type='radio' name='prefix' id='Ms.' value='Ms.')
+			| Ms.
+			input(type='radio' name='prefix' id='Dr.' value='Dr.')
+			| Dr
+		div
+			label(for='firstName')  First Name
+			input#firstName(type='text' name='firstName' required)
+			label(for='')  Last Name
+			input#lastName(type='text' name='lastName' required)
+		div
+			label(for='street') Street:
+			input#street(type='text' name='street' required)
+			label(for='city') City:
+			input#city(type='text' name='city' required)
+		div
+			label(for='state') State:
+			select#state(name='state')
+				option(value='NJ') NJ
+				option(value='NY') NY
+				option(value='PA') PA
+				option(value='CT') CT
+			label(for='zip') Zip:
+			input#zip(type='text' name='zip' required)
+		div
+			label(for='phone') Phone:
+			input#phone(type='tel' name='phone' required)
+		div
+			label(for='email') Email:
+			input#email(type='email' name='email')
+		div
+			| How may we contact you?
+			input#phoneCB(type='checkbox' name='phoneCB' value='phone')
+			| Phone
+			input#mailCB(type='checkbox' name='mailCB' value='mail')
+			| Mail
+			input#emailCB(type='checkbox' name='emailCB' value='email')
+			| Email
+			input#anyCB(type='checkbox' name='anyCB' value='any' checked='')
+			| Any
+			br
+			button(type='submit') Submit!
+	

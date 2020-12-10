@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    .containter
+        .jumbotron
+            h1.display-4 Thank you!
+            p.lead Contact Information Submitted Successfully.
+            .my-5 
+                p.m-4 Name: #{user.prefix+" "+ user.firstName+" "+user.lastName}
+                
+                p.m-4 Address: #{user.street}, #{user.city}, #{user.state}, #{user.zip}
+                
+                p.m-4 Contact by Phone: #{user.contactbyphone}
+                
+                p.m-4 Contact by Mail: #{user.contactbymail}
+                
+                p.m-4 Contact by E-mail: #{user.contactbyemail} 
+
+                .container
+                    a.btn.btn-info(href='/mailer' role='button') Add Another Contact
+                    .divider
+                    a.btn.btn-info(href='/contacts' role='button') View All Contacts
+                    
+                

@@ -1,0 +1,206 @@
+doctype html
+html
+	head
+		
+
+		link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+		link(rel='stylesheet' href='https://unpkg.com/leaflet@1.6.0/dist/leaflet.css' integrity='sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==' crossorigin='')
+		script(src='https://unpkg.com/leaflet@1.6.0/dist/leaflet.js' integrity='sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==' crossorigin='')
+		link(rel='stylesheet' type='text/css' href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css')
+		link(rel = 'stylesheet' type='text/css' href='stylesheets/style.css')
+		script(src='https://code.jquery.com/jquery-3.3.1.js')
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+
+		.container
+			.page-header(align='center')
+				h1 Contact Information with Geocoding
+
+		nav.navbar.navbar-expand-lg.navbar-dark.bg-dark 
+			.navbar-header
+				a.navbar-brand(href='contacts')
+					strong Contacts
+			a.navbar-brand(href='mailer') 
+				strong Create
+			.nav.navbar-nav.navbar-right
+				a.navbar-brand.pull-right(href='login')
+					strong Logout
+			form.form-inline
+				input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search' id ='search')
+			
+
+				
+
+
+
+	body       
+		section#create_user
+						
+			form(action='mailer' method='post')
+				input(type = "hidden" id="id" name="id")
+				div
+					input(type='radio' name='prefix' id='Mr.' value='Mr.'  required='')
+					| Mr.
+					input(type='radio' name='prefix' id='Mrs.' value='Mrs.')
+					| Mrs.
+					input(type='radio' name='prefix' id='Ms.' value='Ms.')
+					| Ms.
+					input(type='radio' name='prefix' id='Dr.' value='Dr.')
+					| Dr
+				div
+					label(for='firstName')  First Name
+					input#firstName(type='text' name='firstName' required)
+					label(for='')  Last Name
+					input#lastName(type='text' name='lastName' required)
+				div
+					label(for='street') Street:
+					input#street(type='text' name='street' required)
+					label(for='city') City:
+					input#city(type='text' name='city' required)
+				div
+					label(for='state') State:
+					select#state(name='state')
+						option(value='NJ') NJ
+						option(value='NY') NY
+						option(value='PA') PA
+						option(value='CT') CT
+					label(for='zip') Zip:
+					input#zip(type='text' name='zip' required)
+				div
+					label(for='phone') Phone:
+					input#phone(type='text' name='phone')
+				div
+					label(for='email') Email:
+					input#email(type='text' name='email')
+				div
+					| How may we contact you?
+					input#phoneCB(type='checkbox'  name='phoneCB' value='phone')
+					| Phone
+					input#mailCB(type='checkbox'   name='mailCB' value='mail')
+					| Mail
+					input#emailCB(type='checkbox'  name='emailCB' value='email')
+					| Email
+					input#anyCB(type='checkbox' name='anyCB' value='any' )
+					| Any
+					br
+					button(type='submit' name = 'updateButton') Submit
+
+
+		section#display_allcontacts
+
+			br
+			table#contactstable(class="table table-striped table-dark" )
+				thead
+					tr
+						th Prefix
+						th First Name
+						th Last Name
+						th Address
+						th Zip
+						th Phone
+						th Email
+						th Latitude
+						th Longitude
+						th Contact by Phone
+						th Contact by Email
+						th Contact by Mail
+						th Update
+						th Delete
+				tbody(id="contactstablebody")
+					
+					each contact in contacts
+						-var id = contact["_id"]
+						-var prefix = contact['prefix']
+						-var firstName = contact['firstName']
+						-var lastName = contact['lastName']
+						-var street = contact['street']
+						-var city = contact['city']
+						-var state = contact['state']
+						-var zip = contact['zip']
+						-var phone = contact['phone']
+						-var email = contact['email']
+						-var contactbyPhone = contact['contactbyPhone']
+						-var contactbyMail = contact['contactbyMail']
+						-var contactbyEmail = contact['contactbyEmail']
+						-var latitude = contact['latitude']
+						-var longitude = contact['longitude']
+						-var address = street+" "+city					
+						
+						tr(data-fullname=fullname, data-latitude = latitude, data-longitude = longitude)
+							td #{contact['prefix']}
+							td #{firstName}
+							td #{lastName}
+							td #{address}
+							td #{zip}					
+							td #{phone}					
+							td #{email}					
+							td #{latitude}
+							td #{longitude}
+							td #{contactbyPhone}
+							td #{contactbyEmail}
+							td #{contactbyMail}
+								
+							td: button#updatecontact(data-id=contact["_id"],  data-prefix=prefix, data-firstName=firstName, data-lastName=lastName, data-street=street, data-city=city, data-state=state, data-zip=zip, data-phone=phone,data-email=email,data-contactbyPhone=contactbyPhone,data-contactbyMail=contactbyMail,data-contactbyEmail=contactbyEmail, type="button" class="btn btn-primary") Update
+
+							td: button#deletecontact(type="button", data-id=contact["_id"], data-latitude=contact["latitude"], data-longitude=contact["longitude"] , data-phone = phone, class="btn btn-danger") Delete	
+			
+			br
+
+			div#mapid
+
+
+		section#update_page
+
+
+			form#update(action='update' method='post')
+				input(type = "hidden" id="id" name="id")
+				div
+					input(type='radio' name='prefix' id='Mr.' value='Mr.' )
+					| Mr.
+					input(type='radio' name='prefix' id='Mrs.' value='Mrs.')
+					| Mrs.
+					input(type='radio' name='prefix' id='Ms.' value='Ms.')
+					| Ms.
+					input(type='radio' name='prefix' id='Dr.' value='Dr.')
+					| Dr
+				div
+					label(for='firstName')  First Name
+					input#firstName(type='text' name='firstName' required)
+					label(for='')  Last Name
+					input#lastName(type='text' name='lastName' required)
+				div
+					label(for='street') Street:
+					input#street(type='text' name='street' required)
+					label(for='city') City:
+					input#city(type='text' name='city' required)
+				div
+					label(for='state') State:
+					select#state(name='state')
+						option(value='NJ') NJ
+						option(value='NY') NY
+						option(value='PA') PA
+						option(value='CT') CT
+					label(for='zip') Zip:
+					input#zip(type='text' name='zip' required)
+				div
+					label(for='phone') Phone:
+					input#phone(type='text' name='phone')
+				div
+					label(for='email') Email:
+					input#email(type='text' name='email')
+				div
+					| How may we contact you?
+					input#phoneCB(type='checkbox'  name='phoneCB' value='phone')
+					| Phone
+					input#mailCB(type='checkbox'   name='mailCB' value='mail')
+					| Mail
+					input#emailCB(type='checkbox'  name='emailCB' value='email')
+					| Email
+					input#anyCB(type='checkbox' name='anyCB' value='any' )
+					| Any
+					br
+					button(type='submit' name = 'updateButton') Submit
+				
+		
+				
+	script(src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js')
+	script(type="text/javascript", src="javascripts/geo_script.js")

@@ -1,0 +1,23 @@
+doctype html
+html
+	
+	head
+        title Secure Contacts
+        
+    body   
+        .container
+            nav.navbar.sticky-top.navbar-expand-lg.navbar-light.bg-light.d-flex
+                a.navbar-brand.offset-lg-5.offset-sm-4.col-12-sm(href="/index") Secure Contacts
+                
+                placeholder="Search" aria-label="Search")
+               nav.navbar.sticky-top.navbar-expand-lg.navbar-light.bg-light
+                .offset-4 
+                    ul#main-nav.navbar-nav.mx-5
+                        li.nav-item.col-12-sm
+                            a.nav-link(href="/index") Home
+                        li.nav-item.col-12-sm 
+                            a.nav-link(href="/mailer") Forms
+                        li.nav-item.col-12-sm 
+                            a#main-contact-btn.nav-link(href="/contacts") Contacts
+                
+            block content
